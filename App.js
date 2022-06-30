@@ -8,10 +8,10 @@ import WelcomeScreen from "./app/screens/WelcomeScreen";
 export default function App() {
   return (
     <Screen>
-      <WelcomeScreen />
+      {/* <WelcomeScreen /> */}
       {/* <LoginScreen /> */}
       {/* <ScanScreen /> */}
-      {/* <BottomToast /> */}
+      <BottomToast />
     </Screen>
   );
 }
