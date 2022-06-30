@@ -1,20 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from "react-native";
+import BottomToast from "./app/components/BottomToast";
+import Screen from "./app/components/Screen";
+import LoginScreen from "./app/screens/LoginScreen";
+import ScanScreen from "./app/screens/ScanScreen";
+import WelcomeScreen from "./app/screens/WelcomeScreen";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Screen>
+      {/* <WelcomeScreen /> */}
+      {/* <LoginScreen /> */}
+      {/* <ScanScreen /> */}
+      <BottomToast />
+    </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
