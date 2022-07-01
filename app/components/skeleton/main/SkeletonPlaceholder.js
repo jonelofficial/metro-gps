@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { Dimensions, StyleSheet, View, Animated, Easing } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useEffect } from "react";
+import { Animated, Dimensions, Easing, StyleSheet, View } from "react-native";
+import colors from "../../../config/colors";
 
 const { width } = Dimensions.get("window");
-import { LinearGradient } from "expo-linear-gradient";
-import colors from "../../config/colors";
 
 const AnimatedLG = Animated.createAnimatedComponent(LinearGradient);
 
-function SkeletonPlaceholder({ height }) {
+function SkeletonPlaceholder({ height = "100%" }) {
   const animatedValue = new Animated.Value(0);
 
   useEffect(() => {

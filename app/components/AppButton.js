@@ -1,15 +1,9 @@
-import React from "react";
-import {
-  ActivityIndicator,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
 import { useFonts } from "expo-font";
+import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 
-import AppText from "./AppText";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
+import AppText from "./AppText";
 
 function AppButton({
   disabled,
@@ -36,14 +30,14 @@ function AppButton({
           backgroundColor: colors[color],
           justifyContent: "center",
           alignItems: "center",
-          flexDirection: isLoading && "row",
+          flexDirection: isLoading ? "row" : "column",
         },
         style,
       ]}
     >
       {isLoading && (
         <ActivityIndicator
-          style={{ alignItems: "flex-end" }}
+          style={{ position: "absolute", left: "30%" }}
           size="large"
           color={colors.main}
         />

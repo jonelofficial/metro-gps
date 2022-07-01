@@ -1,7 +1,6 @@
-import React from "react";
 import { useFonts } from "expo-font";
-import fonts from "../config/fonts";
 import { View } from "react-native";
+import fonts from "../config/fonts";
 
 function Fonts({ children, style }) {
   const [loaded] = useFonts({

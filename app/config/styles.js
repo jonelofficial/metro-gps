@@ -8,10 +8,10 @@ const fonts = {
 
 export default {
   colors,
-  toast: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
+  skeleton: {
+    height: 12,
+    borderRadius: 10,
+    overflow: "hidden",
   },
   text: {
     color: colors.dark,
