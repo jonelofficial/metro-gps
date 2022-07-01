@@ -2,7 +2,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
 
 import AppText from "../components/AppText";
-import Screen from "../components/Screen";
 import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 

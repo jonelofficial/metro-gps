@@ -1,5 +1,6 @@
 import { Image, StyleSheet, View } from "react-native";
 import colors from "../../config/colors";
+import fonts from "../../config/fonts";
 import AppHeading from "../AppHeading";
 import AppText from "../AppText";
 import Fonts from "../Fonts";
@@ -43,9 +44,9 @@ const styles = StyleSheet.create({
   detailsPlaceholder: {
     marginHorizontal: 15,
   },
-  title: { fontFamily: "Khyay", color: colors.primary },
+  title: { fontFamily: fonts.primaryName, color: colors.primary },
   description: {
-    fontFamily: "Khyay",
+    fontFamily: fonts.primaryName,
     color: colors.medium,
     fontSize: 16,
   },

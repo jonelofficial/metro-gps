@@ -16,10 +16,11 @@ export default {
   white: "#fff",
   light: "#f2f2f2",
   light2: "#e9e9e9",
-  // light3: "#d9d9d9",
-  // light2: "#f8f4f4",
+  light3: "#d9d9d9",
+  light4: "#e8e8e8",
 
   disablePrimary: "#fbc383",
   transparentPrimary: "#f6a03d80",
   medium: "#6e6969",
+  lightMedium: "#a19f9f",
 };

@@ -1,6 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { StyleSheet } from "react-native";
 import colors from "../../config/colors";
+import fonts from "../../config/fonts";
 import AppText from "../AppText";
 import AppTextInput from "../AppTextInput";
 import Fonts from "../Fonts";
@@ -38,7 +39,7 @@ function AppFormField({ name, icon, style, ...otherProps }) {
 const styles = StyleSheet.create({
   error: {
     color: colors.danger,
-    fontFamily: "Khyay",
+    fontFamily: fonts.primaryName,
     fontSize: 15,
   },
   errorBox: {

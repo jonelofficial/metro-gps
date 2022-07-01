@@ -12,6 +12,7 @@ import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import defaultStyle from "../config/styles";
 import { loginSchema } from "../config/schema";
+import fonts from "../config/fonts";
 
 function LoginScreen(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
-    fontFamily: "Khyay",
+    fontFamily: fonts.primaryName,
     lineHeight: 45,
     fontWeight: "600",
   },
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   formLabel: {
-    fontFamily: "Khyay",
+    fontFamily: fonts.primaryName,
     marginBottom: 6,
   },
   input: {
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   scanID: {
-    fontFamily: "Khyay",
+    fontFamily: fonts.primaryName,
     color: colors.primary,
   },
 });

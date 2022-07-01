@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   text: {
-    fontFamily: "Khyay",
+    fontFamily: fonts.primaryName,
     color: colors.white,
     textAlign: "center",
     fontSize: 20,
