@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View, Dimensions } from "react-native";
-import Screen from "../components/Screen";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { Camera, CameraType } from "expo-camera";
-import colors from "../config/colors";
 import ViewFinder from "react-native-view-finder";
+
+import BottomToast from "../components/toast/BottomToast";
+import Screen from "../components/Screen";
+import defaultStyle from "../config/styles";
 
 function ScanScreen(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const width = Dimensions.get("screen").width;
-  const height = Dimensions.get("screen").height;
+  const { height } = Dimensions.get("screen");
 
   useEffect(() => {
     (async () => {
@@ -23,10 +24,6 @@ function ScanScreen(props) {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Type: ${type} Data: ${data}`);
-
-    // setTimeout(() => {
-    //   setScanned(false);
-    // }, 3000);
   };
 
   if (hasPermission === null) {
@@ -52,7 +49,7 @@ function ScanScreen(props) {
           width={250}
           borderLength={50}
           borderRadius={15}
-          loading
+          loading={scanned}
         />
         {scanned && (
           <Button
@@ -61,22 +58,22 @@ function ScanScreen(props) {
           />
         )}
       </View>
+      <BottomToast style={defaultStyle.toast} isLoading={!scanned} />
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { backgroundColor: colors.black },
+  screen: { backgroundColor: defaultStyle.colors.black },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-
   box: {
     width: "60%",
     height: "30%",
-    borderColor: colors.white,
+    borderColor: defaultStyle.colors.white,
     borderWidth: 10,
     borderRadius: 25,
     position: "absolute",

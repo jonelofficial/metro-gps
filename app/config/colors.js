@@ -15,7 +15,11 @@ export default {
   dark: "#0c0c0c",
   white: "#fff",
   light: "#f2f2f2",
-  // light: "#f8f4f4",
+  light2: "#e9e9e9",
+  // light3: "#d9d9d9",
+  // light2: "#f8f4f4",
 
+  disablePrimary: "#fbc383",
+  transparentPrimary: "#f6a03d80",
   medium: "#6e6969",
 };
