@@ -8,6 +8,11 @@ const fonts = {
 
 export default {
   colors,
+  toast: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+  },
   text: {
     color: colors.dark,
     width: "100%",
