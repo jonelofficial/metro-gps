@@ -3,14 +3,13 @@ import { Button, StyleSheet, Text, View, Dimensions } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import ViewFinder from "react-native-view-finder";
 
-import BottomToast from "../components/toast/BottomToast";
+import Toast from "../components/toast/Toast";
 import Screen from "../components/Screen";
 import defaultStyle from "../config/styles";
 
 function ScanScreen(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
 
   const { height } = Dimensions.get("screen");
 
@@ -58,7 +57,12 @@ function ScanScreen(props) {
           />
         )}
       </View>
-      <BottomToast style={defaultStyle.toast} isLoading={!scanned} />
+      <Toast
+        position="bottom"
+        isLoading={!scanned}
+        title="Jonel Ignacio"
+        description="Software Application Developer"
+      />
     </Screen>
   );
 }

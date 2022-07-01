@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useState } from "react";
 import {
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import defaultStyle from "../config/styles";
 
@@ -15,6 +15,7 @@ function AppTextInput({
   setShowPassword,
   showPassword,
   onBlur,
+  error,
   ...otherProps
 }) {
   const [click, setClick] = useState(false);
@@ -24,6 +25,7 @@ function AppTextInput({
       style={[
         styles.container,
         { borderColor: click ? defaultStyle.colors.primary : "transparent" },
+        error,
       ]}
     >
       <TextInput
@@ -55,6 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 8,
   },
   icon: {
     // paddingRight: 20,

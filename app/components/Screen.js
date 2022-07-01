@@ -1,7 +1,6 @@
-import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import { useFonts } from "expo-font";
+import { SafeAreaView, StyleSheet } from "react-native";
 import fonts from "../config/fonts";
 
 function Screen({ children, style }) {

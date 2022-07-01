@@ -1,12 +1,9 @@
-import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import Spacer from "../Spacer";
-import SkeletonPlaceholder from "./SkeletonPlaceholder";
+import colors from "../../config/colors";
 import AppHeading from "../AppHeading";
 import AppText from "../AppText";
-import Screen from "../Screen";
 import Fonts from "../Fonts";
-import colors from "../../config/colors";
+import Spacer from "../Spacer";
 
 function UserDetails({ title, description }) {
   return (

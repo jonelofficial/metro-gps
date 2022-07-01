@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import AppHeading from "../components/AppHeading";
 import AppText from "../components/AppText";
@@ -10,6 +11,7 @@ import Screen from "../components/Screen";
 import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import defaultStyle from "../config/styles";
+import { loginSchema } from "../config/schema";
 
 function LoginScreen(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +20,10 @@ function LoginScreen(props) {
     console.log("Clicked Scan ID");
   };
 
-  const methods = useForm();
+  const methods = useForm({
+    resolver: yupResolver(loginSchema),
+    mode: "onTouched",
+  });
 
   const onSubmit = (data) => {
     console.log(data);

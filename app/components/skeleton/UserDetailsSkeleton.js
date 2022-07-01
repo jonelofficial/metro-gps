@@ -1,41 +1,28 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+
 import Spacer from "../Spacer";
-import SkeletonPlaceholder from "./SkeletonPlaceholder";
+import SkeletonWrapper from "../skeleton/main/SkeletonWrapper";
+import Skeleton from "./main/Skeleton";
 
 function UserDetailsSkeleton(props) {
   return (
-    <>
-      <View style={styles.profilePlaceholder}>
-        <SkeletonPlaceholder height={60} />
-      </View>
-      <View style={styles.detailsPlaceholder}>
-        <View style={styles.onePlaceholder}>
-          <SkeletonPlaceholder height={12} />
-        </View>
+    <SkeletonWrapper style={{ flexDirection: "row" }}>
+      <Skeleton style={styles.profilePlaceholder} />
+      <SkeletonWrapper style={styles.detailsPlaceholder}>
+        <Skeleton />
         <Spacer style={{ height: 8 }} />
-        <View style={styles.threePlaceholder}>
-          <View style={styles.one}>
-            <SkeletonPlaceholder height={12} />
-          </View>
-          <View style={styles.two}>
-            <SkeletonPlaceholder height={12} />
-          </View>
-          <View style={styles.three}>
-            <SkeletonPlaceholder height={12} />
-          </View>
-        </View>
+        <SkeletonWrapper style={styles.threePlaceholder}>
+          <Skeleton style={{ width: "20%" }} />
+          <Skeleton style={{ width: "40%", marginHorizontal: 10 }} />
+          <Skeleton style={{ width: "30%" }} />
+        </SkeletonWrapper>
         <Spacer style={{ height: 8 }} />
-        <View style={styles.twoPlaceholder}>
-          <View style={styles.lastOne}>
-            <SkeletonPlaceholder height={12} />
-          </View>
-          <View style={styles.lastTwo}>
-            <SkeletonPlaceholder height={12} />
-          </View>
-        </View>
-      </View>
-    </>
+        <SkeletonWrapper style={styles.twoPlaceholder}>
+          <Skeleton style={{ width: "65%" }} />
+          <Skeleton style={{ width: "30%", marginHorizontal: 10 }} />
+        </SkeletonWrapper>
+      </SkeletonWrapper>
+    </SkeletonWrapper>
   );
 }
 const styles = StyleSheet.create({
@@ -49,50 +36,13 @@ const styles = StyleSheet.create({
     width: "60%",
     marginHorizontal: 15,
   },
-  onePlaceholder: {
-    height: 12,
-    borderRadius: 10,
-    overflow: "hidden",
-  },
   threePlaceholder: {
     flexDirection: "row",
     width: "100%",
   },
-  one: {
-    width: "20%",
-    height: 12,
-    borderRadius: 10,
-    overflow: "hidden",
-  },
-  two: {
-    width: "40%",
-    height: 12,
-    borderRadius: 10,
-    overflow: "hidden",
-    marginHorizontal: 10,
-  },
-  three: {
-    width: "30%",
-    height: 12,
-    borderRadius: 10,
-    overflow: "hidden",
-  },
   twoPlaceholder: {
     flexDirection: "row",
     width: "100%",
-  },
-  lastOne: {
-    width: "65%",
-    height: 12,
-    borderRadius: 10,
-    overflow: "hidden",
-    marginRight: 10,
-  },
-  lastTwo: {
-    width: "30%",
-    height: 12,
-    borderRadius: 10,
-    overflow: "hidden",
   },
 });
 

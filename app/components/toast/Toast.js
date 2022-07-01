@@ -1,22 +1,18 @@
-import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import AppButton from "../AppButton";
 import colors from "../../config/colors";
-import UserDetailsSkeleton from "../skeleton/UserDetailsSkeleton";
+import AppButton from "../AppButton";
 import UserDetails from "../skeleton/UserDetails";
+import UserDetailsSkeleton from "../skeleton/UserDetailsSkeleton";
 
-function BottomToast({ style, isLoading }) {
+function Toast({ isLoading, title, description, position }) {
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, { [position]: 0 }]}>
       <View style={styles.detailsContainer}>
         {isLoading ? (
           <UserDetailsSkeleton />
         ) : (
-          <UserDetails
-            title="Jonel Ignacio"
-            description="Software Application Developer"
-          />
+          <UserDetails title={title} description={description} />
         )}
       </View>
       <AppButton
@@ -35,10 +31,11 @@ const styles = StyleSheet.create({
     padding: 25,
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
+    position: "absolute",
+    width: "100%",
   },
   detailsContainer: {
-    paddingHorizontal: 10,
-    paddingVertical: 15,
+    padding: 15,
     borderColor: colors.primary,
     borderWidth: 1,
     borderRadius: 10,
@@ -47,7 +44,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   button: {
-    fontSize: 16,
+    fontSize: 18,
   },
 });
-export default BottomToast;
+export default Toast;
