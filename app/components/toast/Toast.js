@@ -5,7 +5,10 @@ import AppButton from "../AppButton";
 import UserDetails from "../skeleton/UserDetails";
 import UserDetailsSkeleton from "../skeleton/UserDetailsSkeleton";
 
-function Toast({ isLoading, title, description, position }) {
+function Toast({ isLoading, title, description, position, navigation }) {
+  const handleOnPress = () => {
+    navigation.navigate("DashboardScreen");
+  };
   return (
     <View style={[styles.container, { [position]: 0 }]}>
       <View style={styles.detailsContainer}>
@@ -21,6 +24,7 @@ function Toast({ isLoading, title, description, position }) {
         textStyle={styles.button}
         disabled={isLoading}
         color={isLoading ? "disablePrimary" : "primary"}
+        onPress={isLoading ? null : handleOnPress}
       />
     </View>
   );

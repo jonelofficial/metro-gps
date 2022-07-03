@@ -14,11 +14,12 @@ import defaultStyle from "../config/styles";
 import { loginSchema } from "../config/schema";
 import fonts from "../config/fonts";
 
-function LoginScreen(props) {
+function LoginScreen({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleScan = () => {
     console.log("Clicked Scan ID");
+    navigation.navigate("ScanScreen");
   };
 
   const methods = useForm({
@@ -28,6 +29,7 @@ function LoginScreen(props) {
 
   const onSubmit = (data) => {
     console.log(data);
+    navigation.navigate("DashboardScreen");
   };
 
   return (

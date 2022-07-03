@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
 
@@ -5,7 +6,12 @@ import AppText from "../components/AppText";
 import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 
-function WelcomeScreen(props) {
+function WelcomeScreen({ navigation }) {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate("LoginScreen");
+    }, 2000);
+  }, []);
   return (
     <>
       <LinearGradient

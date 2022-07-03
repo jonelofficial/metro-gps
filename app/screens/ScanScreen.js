@@ -7,7 +7,7 @@ import Toast from "../components/toast/Toast";
 import Screen from "../components/Screen";
 import defaultStyle from "../config/styles";
 
-function ScanScreen(props) {
+function ScanScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -62,6 +62,7 @@ function ScanScreen(props) {
         isLoading={!scanned}
         title="Jonel Ignacio"
         description="Software Application Developer"
+        navigation={navigation}
       />
     </Screen>
   );
