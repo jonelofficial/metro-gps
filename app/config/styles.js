@@ -3,7 +3,7 @@ import colors from "./colors";
 
 const fonts = {
   ios: "Avenir",
-  android: "Roboto",
+  android: "Khyay",
 };
 
 export default {

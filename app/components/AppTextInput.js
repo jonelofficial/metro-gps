@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import defaultStyle from "../config/styles";
+import Fonts from "./Fonts";
 
 function AppTextInput({
   secIcon,
@@ -21,32 +22,34 @@ function AppTextInput({
   const [click, setClick] = useState(false);
 
   return (
-    <View
-      style={[
-        styles.container,
-        { borderColor: click ? defaultStyle.colors.primary : "transparent" },
-        error,
-      ]}
-    >
-      <TextInput
-        style={[defaultStyle.text, style]}
-        onFocus={() => setClick(true)}
-        onBlur={(onBlur && onBlur, () => setClick(false))}
-        {...otherProps}
-      />
-      {secIcon && (
-        <TouchableWithoutFeedback
-          onPress={() => setShowPassword(!showPassword)}
-        >
-          <MaterialCommunityIcons
-            style={styles.icon}
-            name={showPassword ? "eye-off-outline" : "eye-outline"}
-            size={20}
-            color={defaultStyle.colors.medium}
-          />
-        </TouchableWithoutFeedback>
-      )}
-    </View>
+    <Fonts>
+      <View
+        style={[
+          styles.container,
+          { borderColor: click ? defaultStyle.colors.primary : "transparent" },
+          error,
+        ]}
+      >
+        <TextInput
+          style={[defaultStyle.text, style]}
+          onFocus={() => setClick(true)}
+          onBlur={(onBlur && onBlur, () => setClick(false))}
+          {...otherProps}
+        />
+        {secIcon && (
+          <TouchableWithoutFeedback
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <MaterialCommunityIcons
+              style={styles.icon}
+              name={showPassword ? "eye-off-outline" : "eye-outline"}
+              size={20}
+              color={defaultStyle.colors.medium}
+            />
+          </TouchableWithoutFeedback>
+        )}
+      </View>
+    </Fonts>
   );
 }
 const styles = StyleSheet.create({

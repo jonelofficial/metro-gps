@@ -1,6 +1,7 @@
 import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import AppHeading from "../components/AppHeading";
+import AppText from "../components/AppText";
 import Camera from "../components/Camera";
 import Card from "../components/Card";
 import Fonts from "../components/Fonts";
@@ -85,33 +86,48 @@ const initialData = [
   },
 ];
 
-function DashboardScreen(props) {
+function DashboardScreen({ navigation }) {
   const data = Object.keys(initialData).length;
+  console.log(data);
   return (
-    <Screen>
-      <Card image={require("../assets/profile.jpg")} name="Jonel Ignacio" />
-      <SearchBar />
-      <Fonts>
-        <AppHeading size="h3" style={styles.count}>
-          {data} of {data}
-        </AppHeading>
-      </Fonts>
-      <Spacer />
-      <FlatList
-        data={initialData}
-        keyExtractor={(initialData) => initialData.id.toString()}
-        renderItem={({ item }) => (
-          <ListItem
-            name={item.name}
-            location={item.location}
-            km={item.km}
-            hour={item.hour}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+      enabled={false}
+    >
+      <Screen>
+        <Card image={require("../assets/profile.jpg")} name="Jonel Ignacio" />
+        <SearchBar />
+        <Fonts>
+          <AppHeading size="h3" style={styles.count}>
+            {data > 1
+              ? `${data} items`
+              : data == 0
+              ? `No data found`
+              : `${data} item`}
+          </AppHeading>
+        </Fonts>
+        <Spacer />
+        {data > 0 && (
+          <FlatList
+            data={initialData}
+            keyExtractor={(initialData) => initialData.id.toString()}
+            renderItem={({ item }) => (
+              <ListItem
+                name={item.name}
+                location={item.location}
+                km={item.km}
+                hour={item.hour}
+                onPress={() => console.log("item: ", item)}
+              />
+            )}
+            ItemSeparatorComponent={ListItemSeperator}
           />
         )}
-        ItemSeparatorComponent={ListItemSeperator}
-      />
-      <Camera />
-    </Screen>
+        {/* refactor this using useNavigation from @react-navigation/native */}
+        <Camera navigation={navigation} />
+      </Screen>
+    </KeyboardAvoidingView>
   );
 }
 const styles = StyleSheet.create({

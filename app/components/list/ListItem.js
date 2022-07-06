@@ -5,9 +5,9 @@ import fonts from "../../config/fonts";
 import AppText from "../AppText";
 import Fonts from "../Fonts";
 
-function ListItem({ name, location, km, hour }) {
+function ListItem({ name, location, km, hour, onPress }) {
   return (
-    <TouchableOpacity onPress={() => console.log("click list")}>
+    <TouchableOpacity onPress={onPress}>
       <Fonts>
         <View style={styles.container}>
           <View style={styles.detailsContainer}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -6,6 +6,8 @@ import DashboardScreen from "./app/screens/DashboardScreen";
 import LoginScreen from "./app/screens/LoginScreen";
 import ScanScreen from "./app/screens/ScanScreen";
 import WelcomeScreen from "./app/screens/WelcomeScreen";
+import TranspoDetailsScreen from "./app/screens/TranspoDetailsScreen";
+import AppCamera from "./app/components/AppCamera";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +33,11 @@ export default function App() {
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="ScanScreen" component={ScanScreen} />
         <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
+        <Stack.Screen
+          name="TranspoDetailsScreen"
+          component={TranspoDetailsScreen}
+        />
+        <Stack.Screen name="AppCamera" component={AppCamera} />
       </Stack.Navigator>
     </NavigationContainer>
   );

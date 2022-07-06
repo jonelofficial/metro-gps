@@ -14,7 +14,7 @@ function UserDetailsSkeleton(props) {
         <SkeletonWrapper style={styles.threePlaceholder}>
           <Skeleton style={{ width: "20%" }} />
           <Skeleton style={{ width: "40%", marginHorizontal: 10 }} />
-          <Skeleton style={{ width: "30%" }} />
+          <Skeleton style={{ width: "28%" }} />
         </SkeletonWrapper>
         <Spacer style={{ height: 8 }} />
         <SkeletonWrapper style={styles.twoPlaceholder}>

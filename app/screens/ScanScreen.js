@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View, Dimensions } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Animated,
+} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import ViewFinder from "react-native-view-finder";
 
@@ -10,6 +17,24 @@ import defaultStyle from "../config/styles";
 function ScanScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fadeAnim = useRef(new Animated.Value(300)).current;
+
+  const slideIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const slideOut = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 300,
+      useNativeDriver: true,
+      duration: 300,
+    }).start();
+  };
 
   const { height } = Dimensions.get("screen");
 
@@ -20,9 +45,27 @@ function ScanScreen({ navigation }) {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    alert(`Type: ${type} Data: ${data}`);
+  useEffect(() => {
+    if (scanned) {
+      slideIn();
+    } else {
+      slideOut();
+    }
+  }, [scanned]);
+
+  useEffect(() => {
+    if (isLoading) {
+      slideIn();
+    } else {
+      slideOut();
+    }
+  }, [isLoading]);
+
+  const handleBarCodeScanned = async ({ type, data }) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setScanned(true);
+    }, 2000);
   };
 
   if (hasPermission === null) {
@@ -43,27 +86,38 @@ function ScanScreen({ navigation }) {
             { width: "160%", height: height },
           ]}
         />
+
         <ViewFinder
           height={250}
           width={250}
           borderLength={50}
           borderRadius={15}
-          loading={scanned}
+          // loading={!scanned}
         />
         {scanned && (
           <Button
             title={"Tap to Scan Again"}
-            onPress={() => setScanned(false)}
+            onPress={() => {
+              setScanned(false);
+              setIsLoading(false);
+            }}
           />
         )}
       </View>
-      <Toast
-        position="bottom"
-        isLoading={!scanned}
-        title="Jonel Ignacio"
-        description="Software Application Developer"
-        navigation={navigation}
-      />
+      <Animated.View
+        style={{
+          transform: [{ translateY: fadeAnim }],
+        }}
+      >
+        <Toast
+          position="bottom"
+          isLoading={!scanned}
+          title="Jonel Ignacio"
+          description="Software Application Developer"
+          navigation={navigation}
+        />
+        {/* refactor this using useNavigation */}
+      </Animated.View>
     </Screen>
   );
 }
