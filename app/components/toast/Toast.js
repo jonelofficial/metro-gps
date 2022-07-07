@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 
@@ -6,8 +7,8 @@ import AppButton from "../AppButton";
 import UserDetails from "../skeleton/UserDetails";
 import UserDetailsSkeleton from "../skeleton/UserDetailsSkeleton";
 
-function Toast({ isLoading, title, description, position, navigation }) {
-  // refactor this using useNavigation
+function Toast({ isLoading, title, description, position }) {
+  const navigation = useNavigation();
   const handleOnPress = () => {
     navigation.navigate("DashboardScreen");
   };

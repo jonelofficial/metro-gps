@@ -62,7 +62,7 @@ function AppCamera({ navigation, route, style }) {
         <View style={[styles.container, style]}>
           <Camera
             ref={(ref) => setCamera(ref)}
-            flashMode={flash}
+            flashMode={flash === 1 ? "off" : flash}
             style={styles.camera}
             type={type}
             ratio="16:9"

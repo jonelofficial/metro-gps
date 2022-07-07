@@ -86,7 +86,7 @@ const initialData = [
   },
 ];
 
-function DashboardScreen({ navigation }) {
+function DashboardScreen({}) {
   const data = Object.keys(initialData).length;
   console.log(data);
   return (
@@ -124,8 +124,8 @@ function DashboardScreen({ navigation }) {
             ItemSeparatorComponent={ListItemSeperator}
           />
         )}
-        {/* refactor this using useNavigation from @react-navigation/native */}
-        <Camera navigation={navigation} />
+
+        <Camera />
       </Screen>
     </KeyboardAvoidingView>
   );

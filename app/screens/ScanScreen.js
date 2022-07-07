@@ -14,7 +14,7 @@ import Toast from "../components/toast/Toast";
 import Screen from "../components/Screen";
 import defaultStyle from "../config/styles";
 
-function ScanScreen({ navigation }) {
+function ScanScreen({}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -114,9 +114,7 @@ function ScanScreen({ navigation }) {
           isLoading={!scanned}
           title="Jonel Ignacio"
           description="Software Application Developer"
-          navigation={navigation}
         />
-        {/* refactor this using useNavigation */}
       </Animated.View>
     </Screen>
   );
