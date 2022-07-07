@@ -4,9 +4,11 @@ import colors from "../config/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
+import { useNavigation } from "@react-navigation/native";
 
-function Camera({ navigation }) {
-  // refactor this to useNavigation
+function Camera({}) {
+  const navigation = useNavigation();
+
   const handleScan = () => {
     navigation.navigate("TranspoDetailsScreen");
   };

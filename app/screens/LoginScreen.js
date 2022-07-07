@@ -27,9 +27,11 @@ function LoginScreen({ navigation }) {
     mode: "onTouched",
   });
 
+  const { reset } = methods;
   const onSubmit = (data) => {
     console.log(data);
     navigation.navigate("DashboardScreen");
+    reset();
   };
 
   return (
