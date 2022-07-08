@@ -5,12 +5,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
+import routes from "../navigation/routes";
 
 function Camera({}) {
   const navigation = useNavigation();
 
   const handleScan = () => {
-    navigation.navigate("TranspoDetailsScreen");
+    navigation.navigate(routes.DASHBOARD_STACK_SCAN);
   };
   return (
     <BlurView intensity={90} tint="light" style={styles.container}>

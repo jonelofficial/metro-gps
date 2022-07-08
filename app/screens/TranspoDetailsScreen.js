@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 import AppText from "../components/AppText";
-import Fonts from "../components/Fonts";
-import AppFormField from "../components/forms/AppFormField";
-import Screen from "../components/Screen";
-import fonts from "../config/fonts";
-import Spacer from "../components/Spacer";
-import SubmitButton from "../components/forms/SubmitButton";
-import AppCamera from "../components/AppCamera";
-import colors from "../config/colors";
-import { transpoDetailsSchema } from "../config/schema";
 import AppTextInput from "../components/AppTextInput";
+import AppFormField from "../components/forms/AppFormField";
+import SubmitButton from "../components/forms/SubmitButton";
+import Screen from "../components/Screen";
+import Spacer from "../components/Spacer";
+import colors from "../config/colors";
+import fonts from "../config/fonts";
+import { transpoDetailsSchema } from "../config/schema";
+import useBackHandler from "../hooks/useBackHandler";
+import routes from "../navigation/routes";
 
 function TranspoDetailsScreen({ navigation, route }) {
-  const [camera, showCamera] = useState(false);
+  // const [camera, showCamera] = useState(false);
+  // useBackHandler(
+  //   routes.DASHBOARD_STACK,
+  //   (title = "Transaction will cancel"),
+  //   (message = "Are you sure you want to go back?"),
+  //   (confirmation = "Yes")
+  // );
+
   useEffect(() => {
     if (route.params?.image) {
       clearErrors("odoPic");
