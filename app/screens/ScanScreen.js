@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   StyleSheet,
   Text,
   View,
   Dimensions,
-  Animated,
+  BackHandler,
 } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import ViewFinder from "react-native-view-finder";
@@ -13,30 +13,36 @@ import ViewFinder from "react-native-view-finder";
 import Toast from "../components/toast/Toast";
 import Screen from "../components/Screen";
 import defaultStyle from "../config/styles";
+import routes from "../navigation/routes";
+import useBackHandler from "../hooks/useBackHandler";
 
-function ScanScreen({}) {
+const initialData = [
+  {
+    title: "Jonel Ignacio",
+    description: "Web Developer",
+    targetScreen: routes.DASHBOARD,
+  },
+  {
+    title: "jonel ignacio",
+    description: "web developer",
+    targetScreen: routes.TRANSPO_DETAILS,
+  },
+];
+
+function ScanScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const fadeAnim = useRef(new Animated.Value(300)).current;
-
-  const slideIn = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const slideOut = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 300,
-      useNativeDriver: true,
-      duration: 300,
-    }).start();
-  };
+  const [qrData, setQrData] = useState();
 
   const { height } = Dimensions.get("screen");
+
+  // useEffect(() => {
+  //   const backHandler = BackHandler.addEventListener("hardwareBackPress", () =>
+  //     navigation.goBack()
+  //   );
+  //   return () => backHandler.remove();
+  // }, []);
 
   useEffect(() => {
     (async () => {
@@ -45,24 +51,10 @@ function ScanScreen({}) {
     })();
   }, []);
 
-  useEffect(() => {
-    if (scanned) {
-      slideIn();
-    } else {
-      slideOut();
-    }
-  }, [scanned]);
-
-  useEffect(() => {
-    if (isLoading) {
-      slideIn();
-    } else {
-      slideOut();
-    }
-  }, [isLoading]);
-
   const handleBarCodeScanned = async ({ type, data }) => {
     setIsLoading(true);
+    setQrData(initialData[data]);
+
     setTimeout(() => {
       setScanned(true);
     }, 2000);
@@ -92,7 +84,7 @@ function ScanScreen({}) {
           width={250}
           borderLength={50}
           borderRadius={15}
-          // loading={!scanned}
+          loading={isLoading}
         />
         {scanned && (
           <Button
@@ -104,18 +96,15 @@ function ScanScreen({}) {
           />
         )}
       </View>
-      <Animated.View
-        style={{
-          transform: [{ translateY: fadeAnim }],
-        }}
-      >
+      {isLoading && (
         <Toast
-          position="bottom"
+          data={qrData}
           isLoading={!scanned}
-          title="Jonel Ignacio"
-          description="Software Application Developer"
+          scanned={scanned}
+          showToast={isLoading}
+          setScanned={setScanned}
         />
-      </Animated.View>
+      )}
     </Screen>
   );
 }

@@ -1,7 +1,12 @@
-import React from "react";
-import { FlatList, KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import {
+  Alert,
+  BackHandler,
+  FlatList,
+  KeyboardAvoidingView,
+  StyleSheet,
+} from "react-native";
 import AppHeading from "../components/AppHeading";
-import AppText from "../components/AppText";
 import Camera from "../components/Camera";
 import Card from "../components/Card";
 import Fonts from "../components/Fonts";
@@ -12,6 +17,8 @@ import SearchBar from "../components/SearchBar";
 import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
+import useBackHandler from "../hooks/useBackHandler";
+import routes from "../navigation/routes";
 
 const initialData = [
   {
@@ -86,9 +93,16 @@ const initialData = [
   },
 ];
 
-function DashboardScreen({}) {
+function DashboardScreen() {
   const data = Object.keys(initialData).length;
-  console.log(data);
+
+  // useBackHandler(
+  //   routes.LOGIN,
+  //   (title = "Log Out"),
+  //   (message = "Are you sure you want to go back?"),
+  //   (confirmation = "Log Out")
+  // );
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

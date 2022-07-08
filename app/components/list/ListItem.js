@@ -16,9 +16,10 @@ function ListItem({ name, location, km, hour, onPress }) {
           </View>
           <View style={styles.kmDetails}>
             <AppText style={styles.km}>{km}km</AppText>
-            <AppText style={styles.kmph}>
-              {hour} <AppText style={styles.hr}>/hours</AppText>
-            </AppText>
+            <View style={styles.hrWrapper}>
+              <AppText style={styles.kmph}>{hour}</AppText>
+              <AppText style={styles.hr}>/hours</AppText>
+            </View>
           </View>
         </View>
       </Fonts>
@@ -61,6 +62,9 @@ const styles = StyleSheet.create({
     color: colors.lightMedium,
     fontSize: 16,
     lineHeight: 25,
+  },
+  hrWrapper: {
+    flexDirection: "row",
   },
 });
 

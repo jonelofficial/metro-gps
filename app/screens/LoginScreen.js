@@ -13,13 +13,17 @@ import colors from "../config/colors";
 import defaultStyle from "../config/styles";
 import { loginSchema } from "../config/schema";
 import fonts from "../config/fonts";
+import routes from "../navigation/routes";
+import validateBack from "../navigation/validateBack";
 
 function LoginScreen({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
 
+  validateBack();
+
   const handleScan = () => {
     console.log("Clicked Scan ID");
-    navigation.navigate("ScanScreen");
+    navigation.navigate(routes.SCAN);
   };
 
   const methods = useForm({
@@ -30,7 +34,7 @@ function LoginScreen({ navigation }) {
   const { reset } = methods;
   const onSubmit = (data) => {
     console.log(data);
-    navigation.navigate("DashboardScreen");
+    navigation.navigate(routes.DASHBOARD);
     reset();
   };
 

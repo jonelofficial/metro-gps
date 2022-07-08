@@ -5,11 +5,12 @@ import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
 import AppText from "../components/AppText";
 import Spacer from "../components/Spacer";
 import colors from "../config/colors";
+import routes from "../navigation/routes";
 
 function WelcomeScreen({ navigation }) {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate("LoginScreen");
+      navigation.navigate(routes.LOGIN);
     }, 2000);
   }, []);
   return (
