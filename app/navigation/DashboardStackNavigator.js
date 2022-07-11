@@ -11,7 +11,13 @@ const DashboardStackNavigator = () => (
     }}
   >
     <Stack.Screen name="DashboardStack" component={DashboardScreen} />
-    <Stack.Screen name="DashboardStackScan" component={ScanScreen} />
+    <Stack.Screen
+      name="DashboardStackScan"
+      component={ScanScreen}
+      options={{
+        animation: "slide_from_bottom",
+      }}
+    />
   </Stack.Navigator>
 );
 
