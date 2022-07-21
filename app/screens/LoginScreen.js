@@ -15,10 +15,11 @@ import { loginSchema } from "../config/schema";
 import fonts from "../config/fonts";
 import routes from "../navigation/routes";
 import validateBack from "../navigation/validateBack";
+import useAuth from "../auth/useAuth";
 
 function LoginScreen({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
-
+  const { logIn } = useAuth();
   validateBack();
 
   const handleScan = () => {
@@ -33,8 +34,7 @@ function LoginScreen({ navigation }) {
 
   const { reset } = methods;
   const onSubmit = (data) => {
-    console.log(data);
-    navigation.navigate(routes.DASHBOARD);
+    logIn(data);
     reset();
   };
 
