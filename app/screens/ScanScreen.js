@@ -15,6 +15,7 @@ import Screen from "../components/Screen";
 import defaultStyle from "../config/styles";
 import routes from "../navigation/routes";
 import useBackHandler from "../hooks/useBackHandler";
+import useAuth from "../auth/useAuth";
 
 const initialData = [
   {
@@ -35,6 +36,8 @@ function ScanScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [qrData, setQrData] = useState();
 
+  const { logIn } = useAuth();
+
   const { height } = Dimensions.get("screen");
 
   // useEffect(() => {
@@ -52,8 +55,14 @@ function ScanScreen({ navigation }) {
   }, []);
 
   const handleBarCodeScanned = async ({ type, data }) => {
+    // try {
+    //   const json = JSON.parse(data);
+    // } catch (e) {
+    //   logIn(data);
+    // }
+
     setIsLoading(true);
-    setQrData(initialData[data]);
+    setQrData(initialData[1]);
 
     setTimeout(() => {
       setScanned(true);
@@ -75,7 +84,7 @@ function ScanScreen({ navigation }) {
           ratio="16:9"
           style={[
             StyleSheet.absoluteFillObject,
-            { width: "160%", height: height },
+            { width: "170%", height: height },
           ]}
         />
 
@@ -99,7 +108,6 @@ function ScanScreen({ navigation }) {
       {isLoading && (
         <Toast
           data={qrData}
-          isLoading={!scanned}
           scanned={scanned}
           showToast={isLoading}
           setScanned={setScanned}

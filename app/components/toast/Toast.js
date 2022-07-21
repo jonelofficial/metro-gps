@@ -1,20 +1,23 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
+import useAuth from "../../auth/useAuth";
 
 import colors from "../../config/colors";
 import AppButton from "../AppButton";
 import UserDetails from "../skeleton/UserDetails";
 import UserDetailsSkeleton from "../skeleton/UserDetailsSkeleton";
 
-function Toast({ isLoading, scanned, showToast, data, setScanned }) {
+function Toast({ scanned, showToast, data, setScanned }) {
   const navigation = useNavigation();
+  const { logIn } = useAuth();
 
   const { title, description, targetScreen } = data;
 
   const handleOnPress = () => {
-    navigation.navigate(targetScreen);
+    // navigation.navigate(targetScreen);
     setScanned(false);
+    logIn(data);
   };
 
   const fadeAnim = useRef(new Animated.Value(300)).current;
@@ -40,15 +43,14 @@ function Toast({ isLoading, scanned, showToast, data, setScanned }) {
     } else {
       slideOut();
     }
-  }, [scanned]);
 
-  useEffect(() => {
     if (showToast) {
       slideIn();
     } else {
       slideOut();
     }
-  }, [showToast]);
+  }, [scanned, showToast]);
+
   return (
     <Animated.View
       style={{
@@ -57,19 +59,19 @@ function Toast({ isLoading, scanned, showToast, data, setScanned }) {
     >
       <View style={styles.container}>
         <View style={styles.detailsContainer}>
-          {isLoading ? (
-            <UserDetailsSkeleton />
-          ) : (
+          {scanned ? (
             <UserDetails title={title} description={description} />
+          ) : (
+            <UserDetailsSkeleton />
           )}
         </View>
         <AppButton
-          isLoading={isLoading}
-          title={isLoading ? "LOADING..." : "SIGN IN"}
+          isLoading={!scanned}
+          title={scanned ? "SIGN IN" : "LOADING..."}
           textStyle={styles.button}
-          disabled={isLoading}
-          color={isLoading ? "disablePrimary" : "primary"}
-          onPress={isLoading ? null : handleOnPress}
+          disabled={!scanned}
+          color={scanned ? "primary" : "disablePrimary"}
+          onPress={scanned ? handleOnPress : null}
         />
       </View>
     </Animated.View>

@@ -15,13 +15,6 @@ const AppNavigator = () => (
       animation: "fade",
     }}
   >
-    <Stack.Screen name="Welcome" component={WelcomeScreen} />
-    <Stack.Screen name="Login" component={LoginScreen} />
-    <Stack.Screen
-      name="Scan"
-      component={ScanScreen}
-      options={{ animation: "slide_from_bottom" }}
-    />
     <Stack.Screen name="Dashboard" component={DashboardStackNavigator} />
     <Stack.Screen name="TranspoDetails" component={TranspoDetailsScreen} />
   </Stack.Navigator>
