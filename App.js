@@ -19,6 +19,7 @@ export default function App() {
       <NavigationContainer theme={navigationTheme}>
         {/* {user ? <AppNavigator /> : <AuthNavigator />} */}
         <MapScreen />
+        {/* <UseGryo /> */}
       </NavigationContainer>
     </AuthContext.Provider>
   );
