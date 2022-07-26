@@ -14,22 +14,14 @@ import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
 import { transpoDetailsSchema } from "../config/schema";
-import useBackHandler from "../hooks/useBackHandler";
-import routes from "../navigation/routes";
 
 function TranspoDetailsScreen({ navigation, route }) {
   // const [camera, showCamera] = useState(false);
-  // useBackHandler(
-  //   routes.DASHBOARD_STACK,
-  //   (title = "Transaction will cancel"),
-  //   (message = "Are you sure you want to go back?"),
-  //   (confirmation = "Yes")
-  // );
 
   useEffect(() => {
     if (route.params?.image) {
-      clearErrors("odoPic");
-      setValue("odoPic", route.params.image);
+      clearErrors("odometer_image_path");
+      setValue("odometer_image_path", route.params.image);
     }
   }, [route.params?.image]);
 
@@ -51,17 +43,17 @@ function TranspoDetailsScreen({ navigation, route }) {
 
   return (
     <Screen style={styles.screen}>
-      <View style={styles.carDetails}>
-        <AppText>Car Details</AppText>
-      </View>
       <FormProvider {...methods} onSubmit={onSubmit}>
+        <View style={styles.carDetails}>
+          <AppText>Car Details</AppText>
+        </View>
         <AppText style={styles.formLabel}>Odo</AppText>
-        <AppFormField name="odo" keyboardType="numeric" />
+        <AppFormField name="odometer" keyboardType="numeric" />
         <Spacer />
         <AppText style={styles.formLabel}>Odo Picture</AppText>
         <View style={{ display: "none" }}>
           <Controller
-            name="odoPic"
+            name="odometer_image_path"
             control={control}
             render={({ field: { onChange, value } }) => (
               <>
@@ -72,18 +64,23 @@ function TranspoDetailsScreen({ navigation, route }) {
         </View>
 
         <View style={styles.imageWrapper}>
+          {route.params?.image && (
+            <Image source={{ uri: route.params?.image }} style={styles.image} />
+          )}
           <TouchableOpacity
             style={styles.iconWrapper}
             onPress={() => navigation.navigate("AppCamera")}
           >
-            <Ionicons name="ios-camera" size={40} />
+            <Ionicons
+              name={route.params?.image ? "ios-camera-reverse" : "ios-camera"}
+              size={40}
+            />
           </TouchableOpacity>
-          {route.params?.image && (
-            <Image source={{ uri: route.params?.image }} style={styles.image} />
-          )}
         </View>
-        {errors.odoPic && (
-          <AppText style={styles.error}>{errors.odoPic.message}</AppText>
+        {errors.odometer_image_path && (
+          <AppText style={styles.error}>
+            {errors.odometer_image_path.message}
+          </AppText>
         )}
 
         <Spacer />
@@ -119,7 +116,8 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
-    marginHorizontal: 10,
+    marginRight: 10,
+    borderRadius: 10,
   },
   imageWrapper: {
     flexDirection: "row",

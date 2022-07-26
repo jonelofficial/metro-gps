@@ -22,14 +22,13 @@ export default useLocation = () => {
 
       if (!granted) return;
 
-      const result = await Location.getLastKnownPositionAsync();
+      const result = await Location.getCurrentPositionAsync();
       setCurrentLocation({
         latitude: result.coords.latitude,
         longitude: result.coords.longitude,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       });
-      setHeading(result.coords.s);
     } catch (error) {
       console.log(error);
     }

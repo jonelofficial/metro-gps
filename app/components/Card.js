@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: fonts.primaryName,
     fontSize: 30,
+    textTransform: "capitalize",
   },
 });
 
