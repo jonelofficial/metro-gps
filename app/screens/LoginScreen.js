@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import AppHeading from "../components/AppHeading";
 import AppText from "../components/AppText";
 import AppFormField from "../components/forms/AppFormField";
@@ -11,16 +12,17 @@ import Screen from "../components/Screen";
 import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import defaultStyle from "../config/styles";
-import { loginSchema } from "../config/schema";
 import fonts from "../config/fonts";
 import routes from "../navigation/routes";
-import validateBack from "../navigation/validateBack";
 import useAuth from "../auth/useAuth";
+import { loginSchema } from "../config/schema";
+import { useLogin } from "../api/LoginApi";
+import { UserContext } from "../context/AppContext";
 
 function LoginScreen({ navigation }) {
+  const [loading, setLoading] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const { logIn } = useAuth();
-  validateBack();
 
   const handleScan = () => {
     console.log("Clicked Scan ID");
@@ -33,10 +35,26 @@ function LoginScreen({ navigation }) {
   });
 
   const { reset } = methods;
-  const onSubmit = (data) => {
-    logIn(data);
-    reset();
+
+  const onSubmit = async (user) => {
+    try {
+      setLoading(true);
+      const data = await useLogin(user);
+      if (data.user) {
+        logIn(data);
+        reset();
+      } else if (data.error.name === "ValidationError") {
+        alert("Invalid username or password");
+      } else {
+        alert(data.error.message);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.log("LOGIN SCREEN ERROR:", error);
+      setLoading(false);
+    }
   };
+  if (loading) return <ActivityIndicator visible={true} />;
 
   return (
     <Screen style={styles.screen}>
@@ -48,7 +66,7 @@ function LoginScreen({ navigation }) {
         <FormProvider {...methods} onSubmit={onSubmit}>
           <AppText style={styles.formLabel}>Username</AppText>
           <AppFormField
-            name="username"
+            name="identifier"
             autoCapitalize="none"
             autoCorrect={false}
           />

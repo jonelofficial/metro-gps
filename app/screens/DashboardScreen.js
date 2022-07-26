@@ -1,11 +1,7 @@
-import React, { useEffect } from "react";
-import {
-  Alert,
-  BackHandler,
-  FlatList,
-  KeyboardAvoidingView,
-  StyleSheet,
-} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { FlatList, KeyboardAvoidingView, StyleSheet } from "react-native";
+import { getImage } from "../api/UserApi";
+import AuthContext from "../auth/context";
 import AppHeading from "../components/AppHeading";
 import Camera from "../components/Camera";
 import Card from "../components/Card";
@@ -17,8 +13,6 @@ import SearchBar from "../components/SearchBar";
 import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
-import useBackHandler from "../hooks/useBackHandler";
-import routes from "../navigation/routes";
 
 const initialData = [
   {
@@ -95,13 +89,16 @@ const initialData = [
 
 function DashboardScreen() {
   const data = Object.keys(initialData).length;
+  const [image, setImage] = useState();
+  const { token, user } = useContext(AuthContext);
 
-  // useBackHandler(
-  //   routes.LOGIN,
-  //   (title = "Log Out"),
-  //   (message = "Are you sure you want to go back?"),
-  //   (confirmation = "Log Out")
-  // );
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const user = await getImage(token);
+      setImage(`http://10.10.8.22:1337${user.profile.url}`);
+    };
+    fetchUsers();
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -110,7 +107,10 @@ function DashboardScreen() {
       enabled={false}
     >
       <Screen>
-        <Card image={require("../assets/profile.jpg")} name="Jonel Ignacio" />
+        <Card
+          image={{ uri: image }}
+          name={`${user.user.first_name} ${user.user.last_name}`}
+        />
         <SearchBar />
         <Fonts>
           <AppHeading size="h3" style={styles.count}>

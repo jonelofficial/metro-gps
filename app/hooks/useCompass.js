@@ -102,7 +102,6 @@ export default useCompass = () => {
     return magnetometer - 90 >= 0 ? magnetometer - 90 : magnetometer + 271;
   };
   //   const tilt = data.z === -0 ? -125 : 125;
-  const direction = _degree(magnetometer) - 180;
-  console.log("z", data.z);
+  const direction = _degree(magnetometer);
   return direction;
 };

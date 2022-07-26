@@ -5,21 +5,18 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
 import AuthContext from "./app/auth/context";
 import AuthNavigator from "./app/navigation/AuthNavigator";
-import useLocation from "./app/hooks/useLocation";
-import MapScreen from "./app/screens/MapScreen";
 import { LogBox } from "react-native";
 
 LogBox.ignoreLogs(["exported from 'deprecated-react-native-prop-types'."]);
 
 export default function App() {
   const [user, setUser] = useState();
+  const [token, setToken] = useState();
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, token, setToken }}>
       <NavigationContainer theme={navigationTheme}>
-        {/* {user ? <AppNavigator /> : <AuthNavigator />} */}
-        <MapScreen />
-        {/* <UseGryo /> */}
+        {user ? <AppNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     </AuthContext.Provider>
   );

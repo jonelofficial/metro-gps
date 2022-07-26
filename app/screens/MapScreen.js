@@ -15,7 +15,7 @@ function MapScreen(props) {
   const scrollView = useRef();
 
   const direction = useCompass();
-  console.log("degree", direction, "°");
+  // console.log("degree", direction, "°");
 
   const {
     currentLocation,
@@ -49,12 +49,11 @@ function MapScreen(props) {
             style={styles.map}
             provider={PROVIDER_GOOGLE}
             initialRegion={currentLocation}
-            key="CurrentLocation"
           >
             <Marker
               coordinate={currentLocation}
               title={`Latitude: ${currentLocation.latitude} , Longitude: ${currentLocation.longitude} `}
-              rotation={-direction}
+              rotation={direction}
             >
               <View
                 style={{

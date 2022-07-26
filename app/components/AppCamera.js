@@ -50,7 +50,7 @@ function AppCamera({ navigation, route, style }) {
 
   const finalPicture = () => {
     navigation.navigate({
-      name: "TranspoDetailsScreen",
+      name: "TranspoDetails",
       params: { image: image },
       merge: true,
     });

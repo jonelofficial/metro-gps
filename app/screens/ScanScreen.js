@@ -40,13 +40,6 @@ function ScanScreen({ navigation }) {
 
   const { height } = Dimensions.get("screen");
 
-  // useEffect(() => {
-  //   const backHandler = BackHandler.addEventListener("hardwareBackPress", () =>
-  //     navigation.goBack()
-  //   );
-  //   return () => backHandler.remove();
-  // }, []);
-
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
