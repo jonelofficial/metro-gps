@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
@@ -14,9 +14,13 @@ import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
 import { transpoDetailsSchema } from "../config/schema";
+import { createTrip, uploadImage } from "../api/TripApi";
+import AuthContext from "../auth/context";
+import url from "../api/url";
 
 function TranspoDetailsScreen({ navigation, route }) {
   // const [camera, showCamera] = useState(false);
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     if (route.params?.image) {
@@ -37,8 +41,24 @@ function TranspoDetailsScreen({ navigation, route }) {
     setValue,
   } = methods;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const form = new FormData();
+    form.append("files", {
+      uri: data.odometer_image_path.uri,
+      name: data.odometer_image_path.filename,
+      type: `image/${data.odometer_image_path.mediaType}`,
+    });
+    const res = await uploadImage(form);
+    if (res) {
+      console.log(res);
+      const imageUrl = {
+        data: {
+          profile: `${url.BASEURL}${res[0].url}`,
+        },
+      };
+      const res_create = await createTrip(imageUrl, token);
+      console.log(res_create);
+    }
   };
 
   return (
@@ -58,6 +78,11 @@ function TranspoDetailsScreen({ navigation, route }) {
             render={({ field: { onChange, value } }) => (
               <>
                 <AppTextInput onChangeText={onChange} value={value} />
+                <Image
+                  source={{ uri: route.params?.image.uri }}
+                  style={styles.image}
+                  value={value}
+                />
               </>
             )}
           />
@@ -65,7 +90,10 @@ function TranspoDetailsScreen({ navigation, route }) {
 
         <View style={styles.imageWrapper}>
           {route.params?.image && (
-            <Image source={{ uri: route.params?.image }} style={styles.image} />
+            <Image
+              source={{ uri: route.params.image.uri }}
+              style={styles.image}
+            />
           )}
           <TouchableOpacity
             style={styles.iconWrapper}
@@ -93,7 +121,7 @@ function TranspoDetailsScreen({ navigation, route }) {
           style={{ textAlignVertical: "top" }}
         />
         <Spacer />
-        <SubmitButton title="Sign In" />
+        <SubmitButton title="Start" />
       </FormProvider>
     </Screen>
   );

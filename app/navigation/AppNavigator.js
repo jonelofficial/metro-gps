@@ -16,7 +16,7 @@ const AppNavigator = () => (
       animation: "fade",
     }}
   >
-    {/* <Stack.Screen name="Dashboard" component={DashboardStackNavigator} /> */}
+    <Stack.Screen name="Dashboard" component={DashboardStackNavigator} />
     <Stack.Screen name="TranspoDetails" component={TranspoDetailsScreen} />
     <Stack.Screen name="AppCamera" component={AppCamera} />
   </Stack.Navigator>

@@ -1,4 +1,5 @@
 import { CameraType, Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,15 +10,18 @@ import colors from "../config/colors";
 
 function AppCamera({ navigation, route, style }) {
   const [hasPermission, setHasPermission] = useState(null);
+  const [mediaPermission, setmediaPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(1);
   const [camera, setCamera] = useState(null);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
+      const res = await MediaLibrary.requestPermissionsAsync();
+      setmediaPermission(res.status === "granted");
     })();
   }, []);
 
@@ -32,7 +36,8 @@ function AppCamera({ navigation, route, style }) {
   const takePicture = async () => {
     if (camera) {
       const data = await camera.takePictureAsync(null);
-      setImage(data.uri);
+      const asset = await MediaLibrary.createAssetAsync(data.uri);
+      setImage(asset);
     }
   };
 
@@ -112,7 +117,7 @@ function AppCamera({ navigation, route, style }) {
         </View>
       ) : (
         <>
-          <Image source={{ uri: image }} style={{ flex: 1 }} />
+          <Image source={{ uri: image.uri }} style={{ flex: 1 }} />
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
               <TouchableOpacity

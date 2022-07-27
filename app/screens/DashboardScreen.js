@@ -13,6 +13,7 @@ import SearchBar from "../components/SearchBar";
 import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
+import url from "../api/url";
 
 const initialData = [
   {
@@ -93,11 +94,7 @@ function DashboardScreen() {
   const { token, user } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const user = await getImage(token);
-      setImage(`http://10.10.8.22:1337${user.profile.url}`);
-    };
-    fetchUsers();
+    setImage(`${url.BASEURL}${user.user.profile}`);
   }, []);
 
   return (
