@@ -90,6 +90,7 @@ const initialData = [
 
 function DashboardScreen() {
   const data = Object.keys(initialData).length;
+  const [trips, setTrips] = useState(initialData);
   const [image, setImage] = useState();
   const { token, user } = useContext(AuthContext);
 
@@ -121,7 +122,7 @@ function DashboardScreen() {
         <Spacer />
         {data > 0 && (
           <FlatList
-            data={initialData}
+            data={trips}
             keyExtractor={(initialData) => initialData.id.toString()}
             renderItem={({ item }) => (
               <ListItem
@@ -133,6 +134,8 @@ function DashboardScreen() {
               />
             )}
             ItemSeparatorComponent={ListItemSeperator}
+            refreshing={false}
+            onRefresh={() => setTrips(initialData)}
           />
         )}
 
