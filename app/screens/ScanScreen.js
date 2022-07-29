@@ -1,12 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  BackHandler,
-} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, StyleSheet, Text, View, Dimensions } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import ViewFinder from "react-native-view-finder";
 
@@ -14,27 +7,33 @@ import Toast from "../components/toast/Toast";
 import Screen from "../components/Screen";
 import defaultStyle from "../config/styles";
 import routes from "../navigation/routes";
-import useBackHandler from "../hooks/useBackHandler";
 import useAuth from "../auth/useAuth";
+import { useLogin } from "../api/LoginApi";
+import AuthContext from "../auth/context";
 
-const initialData = [
-  {
-    title: "Jonel Ignacio",
-    description: "Web Developer",
-    targetScreen: routes.DASHBOARD,
-  },
-  {
-    title: "jonel ignacio",
-    description: "web developer",
-    targetScreen: routes.TRANSPO_DETAILS,
-  },
-];
+// const initialData = [
+//   {
+//     title: "Jonel Ignacio",
+//     description: "Web Developer",
+//     targetScreen: routes.DASHBOARD,
+//   },
+//   {
+//     title: "jonel ignacio",
+//     description: "web developer",
+//     targetScreen: routes.TRANSPO_DETAILS,
+//   },
+// ];
 
 function ScanScreen({ navigation }) {
+  const { user } = useContext(AuthContext);
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [qrData, setQrData] = useState();
+  const [qrData, setQrData] = useState({
+    title: null,
+    description: null,
+    targetScreen: null,
+  });
 
   const { logIn } = useAuth();
 
@@ -48,18 +47,33 @@ function ScanScreen({ navigation }) {
   }, []);
 
   const handleBarCodeScanned = async ({ type, data }) => {
-    // try {
-    //   const json = JSON.parse(data);
-    // } catch (e) {
-    //   logIn(data);
-    // }
+    try {
+      const json = await JSON.parse(data);
+      if (json.vehicle_type && user) {
+        // setIsLoading(true);
+        // setQrData(initialData[1]);
 
-    setIsLoading(true);
-    setQrData(initialData[1]);
+        // setTimeout(() => {
+        //   setScanned(true);
+        // }, 2000);
+        console.log(json);
+      } else if (!user) {
+        setIsLoading(true);
+        const loginRes = await useLogin(json);
+        console.log(loginRes);
 
-    setTimeout(() => {
-      setScanned(true);
-    }, 2000);
+        // setQrData(initialData[1]);
+
+        // setTimeout(() => {
+        //   setScanned(true);
+        // }, 2000);
+      } else {
+        alert("please login first");
+      }
+    } catch (e) {
+      // logIn(data);
+      console.log("SCAN ERROR: ", e);
+    }
   };
 
   if (hasPermission === null) {

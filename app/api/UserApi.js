@@ -2,7 +2,7 @@ const baseUrl = "http://10.10.8.22:1337/api/users";
 
 export const getUsers = async (token) => {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await fetch(`${baseUrl}/?populate=*`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
