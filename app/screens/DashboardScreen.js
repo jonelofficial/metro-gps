@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FlatList, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { getImage } from "../api/UserApi";
 import AuthContext from "../auth/context";
 import AppHeading from "../components/AppHeading";
 import Camera from "../components/Camera";
@@ -14,6 +13,8 @@ import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
 import url from "../api/url";
+import { getUsers } from "../api/UserApi";
+import { getTrip } from "../api/TripApi";
 
 const initialData = [
   {
@@ -94,8 +95,14 @@ function DashboardScreen() {
   const [image, setImage] = useState();
   const { token, user } = useContext(AuthContext);
 
+  const fetchTrip = async () => {
+    const res = await getTrip(token);
+    console.log(res);
+  };
+
   useEffect(() => {
     setImage(`${url.BASEURL}${user.user.profile}`);
+    fetchTrip();
   }, []);
 
   return (

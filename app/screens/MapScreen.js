@@ -1,45 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 import Screen from "../components/Screen";
 import AppButton from "../components/AppButton";
 import ActivityIndicator from "../components/ActivityIndicator";
 import useLocation from "../hooks/useLocation";
 import Spacer from "../components/Spacer";
-import colors from "../config/colors";
 import useCompass from "../hooks/useCompass";
 
 function MapScreen(props) {
-  const [history, setHistory] = useState([]);
-  const scrollView = useRef();
-
   const direction = useCompass();
-  // console.log("degree", direction, "°");
 
   const {
-    currentLocation,
     handleArrived,
-    arrived,
-    arrivedLoading,
     handleLeft,
-    left,
+    currentLocation,
+    arrivedLoading,
     leftLoading,
-    heading,
     width,
   } = useLocation();
-
-  useEffect(() => {
-    currentLocation && setHistory([...history, currentLocation]);
-  }, [currentLocation]);
-
-  useEffect(() => {
-    console.log("ARRIVED: ", arrived);
-  }, [arrived]);
-
-  useEffect(() => {
-    console.log("LEFT: ", left);
-  }, [left]);
 
   return (
     <Screen>
@@ -88,26 +68,6 @@ function MapScreen(props) {
               isLoading={arrivedLoading}
               disabled={arrivedLoading}
             />
-          </View>
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              backgroundColor: colors.black,
-            }}
-          >
-            <ScrollView
-              vertical
-              ref={scrollView}
-              onContentSizeChange={() => scrollView.current.scrollToEnd()}
-            >
-              {history.map((item, i) => (
-                <Text
-                  style={{ color: "red" }}
-                  key={i}
-                >{`LATITUDE: ${item.latitude}    ---    LONGITUDE: ${item.latitude}`}</Text>
-              ))}
-            </ScrollView>
           </View>
         </>
       ) : (
