@@ -1,12 +1,12 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
 import AppHeading from "./AppHeading";
 import AppText from "./AppText";
 import Fonts from "./Fonts";
 
-function Card({ name, image, style }) {
+function Card({ name, image, style, onPress }) {
   return (
     <View style={[styles.container, style]}>
       <View style={styles.detailsContainer}>
@@ -17,9 +17,9 @@ function Card({ name, image, style }) {
           </AppHeading>
         </Fonts>
       </View>
-      <View style={styles.imageContainer}>
+      <TouchableOpacity style={styles.imageContainer} onPress={onPress}>
         <Image source={image} style={styles.image} />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
