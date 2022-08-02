@@ -18,6 +18,7 @@ import useAuth from "../auth/useAuth";
 import { loginSchema } from "../config/schema";
 import { useLogin } from "../api/LoginApi";
 import { UserContext } from "../context/AppContext";
+import authStorage from "../auth/storage";
 
 function LoginScreen({ navigation }) {
   const [loading, setLoading] = useState();
@@ -42,6 +43,7 @@ function LoginScreen({ navigation }) {
       const data = await useLogin(user);
       if (data.user) {
         logIn(data);
+        authStorage.storeToken(data);
         reset();
       } else if (data.error.name === "ValidationError") {
         alert("Invalid username or password");

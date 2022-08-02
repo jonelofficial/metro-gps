@@ -1,5 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FlatList, KeyboardAvoidingView, StyleSheet } from "react-native";
+import {
+  Button,
+  FlatList,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import Modal from "react-native-modal";
+
 import AuthContext from "../auth/context";
 import AppHeading from "../components/AppHeading";
 import Camera from "../components/Camera";
@@ -13,8 +23,8 @@ import Spacer from "../components/Spacer";
 import colors from "../config/colors";
 import fonts from "../config/fonts";
 import url from "../api/url";
-import { getUsers } from "../api/UserApi";
 import { getTrip } from "../api/TripApi";
+import authStorage from "../auth/storage";
 
 const initialData = [
   {
@@ -93,7 +103,8 @@ function DashboardScreen() {
   const data = Object.keys(initialData).length;
   const [trips, setTrips] = useState(initialData);
   const [image, setImage] = useState();
-  const { token, user } = useContext(AuthContext);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const { token, user, setUser, setToken } = useContext(AuthContext);
 
   const fetchTrip = async () => {
     const res = await getTrip(token);
@@ -105,50 +116,71 @@ function DashboardScreen() {
     fetchTrip();
   }, []);
 
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
-      enabled={false}
-    >
-      <Screen>
-        <Card
-          image={{ uri: image }}
-          name={`${user.user.first_name} ${user.user.last_name}`}
-        />
-        <SearchBar />
-        <Fonts>
-          <AppHeading size="h3" style={styles.count}>
-            {data > 1
-              ? `${data} items`
-              : data == 0
-              ? `No data found`
-              : `${data} item`}
-          </AppHeading>
-        </Fonts>
-        <Spacer />
-        {data > 0 && (
-          <FlatList
-            data={trips}
-            keyExtractor={(initialData) => initialData.id.toString()}
-            renderItem={({ item }) => (
-              <ListItem
-                name={item.name}
-                location={item.location}
-                km={item.km}
-                hour={item.hour}
-                onPress={() => console.log("item: ", item)}
-              />
-            )}
-            ItemSeparatorComponent={ListItemSeperator}
-            refreshing={false}
-            onRefresh={() => setTrips(initialData)}
-          />
-        )}
+  const handleLogout = () => {
+    setUser(null);
+    setToken(null);
+    authStorage.removeToken();
+  };
 
-        <Camera />
-      </Screen>
-    </KeyboardAvoidingView>
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  return (
+    <>
+      <View>
+        <Modal isVisible={isModalVisible} style={styles.bottomModal}>
+          <View style={styles.modalContent}>
+            <Text>I am the modal content!</Text>
+            <Button title="Hide modal" onPress={toggleModal} />
+          </View>
+        </Modal>
+      </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        enabled={false}
+      >
+        <Screen>
+          <Card
+            image={{ uri: image }}
+            name={`${user.user.first_name} ${user.user.last_name}`}
+            onPress={toggleModal}
+          />
+          <SearchBar />
+          <Fonts>
+            <AppHeading size="h3" style={styles.count}>
+              {data > 1
+                ? `${data} items`
+                : data == 0
+                ? `No data found`
+                : `${data} item`}
+            </AppHeading>
+          </Fonts>
+          <Spacer />
+          {data > 0 && (
+            <FlatList
+              data={trips}
+              keyExtractor={(initialData) => initialData.id.toString()}
+              renderItem={({ item }) => (
+                <ListItem
+                  name={item.name}
+                  location={item.location}
+                  km={item.km}
+                  hour={item.hour}
+                  onPress={() => console.log("item: ", item)}
+                />
+              )}
+              ItemSeparatorComponent={ListItemSeperator}
+              refreshing={false}
+              onRefresh={() => setTrips(initialData)}
+            />
+          )}
+
+          <Camera />
+        </Screen>
+      </KeyboardAvoidingView>
+    </>
   );
 }
 const styles = StyleSheet.create({
@@ -156,6 +188,18 @@ const styles = StyleSheet.create({
     color: colors.lightMedium,
     textAlign: "center",
     fontFamily: fonts.primaryName,
+  },
+  bottomModal: {
+    justifyContent: "flex-end",
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 4,
+    borderColor: "rgba(0, 0, 0, 0.1)",
   },
 });
 
